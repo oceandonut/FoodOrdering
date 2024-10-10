@@ -10,7 +10,7 @@ export default function OrdersScreen() {
     <>
       <Stack.Screen         
         options={{
-          title: 'Orders',
+          title: 'Archive',
         }}/>
       <FlatList 
         data={orders}
