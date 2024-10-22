@@ -1,15 +1,19 @@
 import { View, Text, StyleSheet, Image } from 'react-native'
 
-import { OrderItem } from '@/src/types'
+import { Tables } from '@/src/types'
 import { defaultPizzaImage } from '@/src/components/ProductListItem';
 import Colors from '@/src/constants/Colors';
 
 type OrderItemListItemProps = {
-  orderItem: OrderItem
+  item: {products: Tables<'products'>} & Tables<'order_items'>
 };
 
-const OrderItemListItem = ({ orderItem }: OrderItemListItemProps) => {
-  const product = orderItem.products;
+const OrderItemListItem = ({ item }: OrderItemListItemProps) => {
+  if (!item) {
+    return <Text>Failed to fetch order details</Text>
+  }
+
+  const product = item.products;
 
   return (
     <View style={styles.container}>
@@ -23,12 +27,12 @@ const OrderItemListItem = ({ orderItem }: OrderItemListItemProps) => {
           <Text style={styles.name}>{product.name}</Text>
           <View style={styles.subtitle}>
             <Text style={styles.price}>${product.price.toFixed(2)}</Text>
-            <Text style={styles.size}>Size: {orderItem.size}</Text>
+            <Text style={styles.size}>Size: {item.size}</Text>
           </View>
         </View>
       </View>
 
-      <Text style={styles.quantity}>{orderItem.quantity}</Text>
+      <Text style={styles.quantity}>{item.quantity}</Text>
     </View>
   )
 }
