@@ -87,13 +87,14 @@ const CreateProductScreen = () => {
     );
   };
 
-  const onUpdate = () => {
+  const onUpdate = async () => {
     if (!validateInput()) {
       return;
     }
 
+    const imagePath = await uploadImage();
     // Save in the database
-    updateProduct({ id, name, price: parseFloat(price), image },
+    updateProduct({ id, name, price: parseFloat(price), image: imagePath },
       {
         onSuccess: () => {
           resetFields();
