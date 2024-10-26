@@ -1,18 +1,17 @@
 import { createContext, PropsWithChildren, useContext, useEffect, useState } from "react";
+import { ActivityIndicator } from "react-native";
 import { Session } from "@supabase/supabase-js";
 
 import { supabase } from "@/src/lib/supabase";
 
 type AuthData = {
   session: Session | null;
-  loading: boolean;
   profile: any;
   isAdmin: boolean;
 };
 
 const AuthContext = createContext<AuthData>({
   session: null,
-  loading: true,
   profile: null,
   isAdmin: false,
 });
@@ -46,8 +45,12 @@ export default function AuthProvider({children}: PropsWithChildren) {
     });
   }, [])
 
+  if (loading) {
+    return <ActivityIndicator />;
+  }
+
   return (
-    <AuthContext.Provider value={{ session, loading, profile, isAdmin: profile?.group === 'ADMIN' }}>
+    <AuthContext.Provider value={{ session, profile, isAdmin: profile?.group === 'ADMIN' }}>
       {children}
     </AuthContext.Provider>
   );
