@@ -20,6 +20,7 @@ const ExpoSecureStoreAdapter = {
 const origin = Constants?.expoConfig?.hostUri?.split(":").shift();
 
 if (!origin) throw new Error("Could not determine origin");
+console.log('origin: ', origin);
 
 const supabaseUrl = `http://${origin}:54321`; // for production url see .env
 const supabaseAnonKey = process.env.EXPO_PUBLIC_SUPABASE_ANON || "";
